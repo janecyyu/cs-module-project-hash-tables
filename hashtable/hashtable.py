@@ -67,7 +67,7 @@ class HashTable:
         # Magic Constant: 5381
         hash = 5381
         for x in key:
-            hash = ((hash << 5) + hash) + x.encode()
+            hash = ((hash << 5) + hash) + ord(x)
         return hash & 0xffffffff
 
     def hash_index(self, key):
