@@ -24,7 +24,11 @@ class HashTable:
     def __init__(self, capacity):
         # Your code here
         self.capacity = capacity
-        self.data = [None]*capacity
+        self.data = [None] * capacity
+        self.head = None
+
+    def __str__(self):
+        return(self.data)
 
     def get_num_slots(self):
         """
@@ -48,7 +52,7 @@ class HashTable:
         # Your code here
         count = 0
         for x in self.data:
-            if x != None:
+            if x is not None:
                 count += 1
         return count / self.get_num_slots()
 
@@ -91,8 +95,28 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # Find the index in the hash table for the key
         i = self.hash_index(key)
-        self.data[i] = value
+        print(i)
+        lst = self.data[i]
+        # Search the list at that index for the key
+        # If it exists:
+        if lst is not None:
+            newItem = HashTableEntry(key, value)
+            cur = lst
+            while cur is not None:
+                if cur.key == key:
+                    cur.value = value
+                    return
+                cur = cur.next
+            newItem.next = cur
+
+        # Else it doesn't exist:
+        else:
+            # Make a new record (`HashTableEntry` class) with the key and value
+            lst = HashTableEntry(key, value)
+            # Insert it anywhere in the list
+            self.data[i] = lst
 
     def delete(self, key):
         """
@@ -103,8 +127,19 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # Find the index in the hash table for the key
         i = self.hash_index(key)
-        self.data[i] = None
+        # Search the list at that index for the key
+        lst = self.data[i]
+        # If it exists:
+        if lst is not None:
+            # Delete the entry from the linked list
+            removed = lst.value
+            lst.value = None
+            # Politely return the deleted value
+            return removed
+        else:
+            return None
 
     def get(self, key):
         """
@@ -115,8 +150,18 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        # Find the index in the hash table for the key
         i = self.hash_index(key)
-        return self.data[i]
+        # Search the list at that index for the key
+        lst = self.data[i]
+        # If it exists:
+        if lst is not None:
+            #  Return the value
+            return lst.value
+        # Else it doesn't exist:
+        else:
+            #  Return `None`
+            return None
 
     def resize(self, new_capacity):
         """
