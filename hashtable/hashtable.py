@@ -7,6 +7,7 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
+        self.prev = None
 
 
 # Hash table can't have fewer than this many slots
@@ -97,7 +98,6 @@ class HashTable:
         # Your code here
         # Find the index in the hash table for the key
         i = self.hash_index(key)
-        print(i)
         lst = self.data[i]
         # Search the list at that index for the key
         # If it exists:
@@ -109,7 +109,9 @@ class HashTable:
                     cur.value = value
                     return
                 cur = cur.next
-            newItem.next = cur
+            newItem.next = lst
+            self.data[i] = newItem
+            # print(self.data[i].value)
 
         # Else it doesn't exist:
         else:
@@ -156,8 +158,13 @@ class HashTable:
         lst = self.data[i]
         # If it exists:
         if lst is not None:
-            #  Return the value
-            return lst.value
+            cur = lst
+            while cur is not None:
+                if cur.key == key:
+                    #  Return the value
+                    return cur.value
+                cur = cur.next
+            return None
         # Else it doesn't exist:
         else:
             #  Return `None`
