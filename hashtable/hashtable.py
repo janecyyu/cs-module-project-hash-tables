@@ -26,7 +26,6 @@ class HashTable:
         # Your code here
         self.capacity = capacity
         self.data = [None] * capacity
-        self.head = None
 
     def __str__(self):
         return(self.data)
@@ -135,11 +134,17 @@ class HashTable:
         lst = self.data[i]
         # If it exists:
         if lst is not None:
-            # Delete the entry from the linked list
-            removed = lst.value
-            lst.value = None
-            # Politely return the deleted value
-            return removed
+            cur = lst
+            while cur is not None:
+                if cur.key == key:
+                    # Delete the entry from the linked list
+                    removed = cur.value
+                    cur.value = None
+                    # Politely return the deleted value
+                    return removed
+                cur = cur.next
+            return None
+
         else:
             return None
 
@@ -178,6 +183,19 @@ class HashTable:
         Implement this.
         """
         # Your code here
+        self.capacity = new_capacity
+        # Make a new array with new capacity of the old one
+        new_data = [None] * new_capacity
+        # Have the hash table refer to that new array
+        old_data = self.data
+        self.data = new_data
+        # Run through all the nodes in the old hash table array
+        for lst in old_data:
+            cur = lst
+            while cur is not None:
+                # Put them in the new hash table array
+                self.put(cur.key, cur.value)
+                cur = cur.next
 
 
 if __name__ == "__main__":
