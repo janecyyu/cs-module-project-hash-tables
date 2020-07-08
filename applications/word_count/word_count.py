@@ -2,7 +2,9 @@ import string
 
 
 def word_count(s):
+    # remove punctuation
     for c in string.punctuation:
+        # except '
         if c is not "'":
             s = s.replace(c, "")
     counts = {}
@@ -12,7 +14,7 @@ def word_count(s):
         if word not in counts:
             counts[word] = 0
         counts[word] += 1
-    print("counts", counts)
+    # print("counts", counts)
     return counts
 
 
