@@ -20,12 +20,10 @@ def slowfun(x, y):
     """
     # Your code here
 
-    key = math.pow(x, y)
-    if key not in cache:  # if key's not a key in the cache dict
-        cache[key] = slowfun_too_slow(x, y)
-    print(cache)
-    print(cache[key])
-    return cache[key]
+    n = math.pow(x, y)
+    if n not in cache:  # if n's not a key in the cache dict
+        cache[n] = slowfun_too_slow(x, y)
+    return cache[n]
 
 
 # Do not modify below this line!
