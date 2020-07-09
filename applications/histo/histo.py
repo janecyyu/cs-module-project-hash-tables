@@ -21,6 +21,14 @@ for w in words:
         counts[w] = []
     counts[w].append("#")
 
-for k, v in counts.items():
+# find longest word:
+logest_str = max(words, key=len)
+longest_len = len(logest_str)
+
+myDict = sorted(counts.items(), key=lambda item: item[1], reverse=True)
+# print(type(myDict))
+for k, v in myDict:
+    if len(k) < longest_len:
+        k = k+" "*(longest_len-len(k))
     print(k, end=" ")
     print("".join(v))
