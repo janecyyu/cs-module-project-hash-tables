@@ -7,7 +7,6 @@ class HashTableEntry:
         self.key = key
         self.value = value
         self.next = None
-        self.prev = None
 
 
 # Hash table can't have fewer than this many slots
@@ -52,8 +51,11 @@ class HashTable:
         # Your code here
         count = 0
         for x in self.data:
-            if x is not None:
-                count += 1
+            cur = x
+            if cur is not None:
+                while cur is not None:
+                    count += 1
+                    cur = cur.next
         return count / self.get_num_slots()
 
     def fnv1(self, key):
@@ -118,6 +120,10 @@ class HashTable:
             lst = HashTableEntry(key, value)
             # Insert it anywhere in the list
             self.data[i] = lst
+
+        # if load higher than 0.7, resize
+        if self.get_load_factor() > 0.7:
+            self.resize(self.capacity*2)
 
     def delete(self, key):
         """
