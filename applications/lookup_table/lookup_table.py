@@ -1,4 +1,7 @@
 # Your code here
+import random
+import math
+cache = {}
 
 
 def slowfun_too_slow(x, y):
@@ -9,6 +12,7 @@ def slowfun_too_slow(x, y):
 
     return v
 
+
 def slowfun(x, y):
     """
     Rewrite slowfun_too_slow() in here so that the program produces the same
@@ -16,6 +20,10 @@ def slowfun(x, y):
     """
     # Your code here
 
+    n = math.pow(x, y)
+    if n not in cache:  # if n's not a key in the cache dict
+        cache[n] = slowfun_too_slow(x, y)
+    return cache[n]
 
 
 # Do not modify below this line!
