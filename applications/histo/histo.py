@@ -11,7 +11,7 @@ for c in string.punctuation:
     # except '
     if c != "'":
         words = words.replace(c, "")
-
+words = words.lower()
 # split it into words.
 words = words.split()
 counts = {}
@@ -25,9 +25,17 @@ for w in words:
 logest_str = max(words, key=len)
 longest_len = len(logest_str)
 
-myDict = sorted(counts.items(), key=lambda item: item[1], reverse=True)
-# print(type(myDict))
-for k, v in myDict:
+# make dict to list
+dictlist = []
+temp = []
+
+for key, value in counts.items():
+    temp = [key, value]
+    dictlist.append(temp)
+
+dictlist = sorted(dictlist, key=lambda item: (-len(item[1]), item[0]))
+
+for k, v in dictlist:
     if len(k) < longest_len:
         k = k+" "*(longest_len-len(k))
     print(k, end=" ")
